@@ -1,5 +1,5 @@
 board = ['rnbqkbnr','pppppppp','........','........','........','........','PPPPPPPP','RNBQKBNR','w','KQkq','-',0,1]
-#Gmoves = am.availableMoves(board)
+piecesOnBoard = {}
 
 def printBoard():
     #print layout of top of board
@@ -28,49 +28,49 @@ class pieceClass(object):
 
     def availableMoves(self):
         if self.piece.upper() == 'P':
-            whiteOrBlack = 1
+            whiteOrBlack = -1
             if self.piece.islower():
-                whiteOrBlack = -1
+                whiteOrBlack = 1
             if self.square[1] == '2' or self.square[1] == '7':
                 pieceInSquare = isOccupied(self.square[0] + str(int(self.square[1]) + (2 * whiteOrBlack)))
                 if pieceInSquare == self.square[0] + str(int(self.square[1]) + (2 * whiteOrBlack)):
-                    print('MEME')
-                    self.moves.append((pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((pieceInSquare, self.square))
+                    print(self.moves)
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + (10 * whiteOrBlack)))
-            if pieceInSquare == rowcolToSquare(int(self.square) + (10 * whiteOrBlack)):
-                self.moves.append((pieceInSquare, rowcolToSquare(self.square)))
+            if pieceInSquare == rowcolToSquare(int(squareToRowCol(self.square)) + (10 * whiteOrBlack)):
+                self.moves.append((pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + (9 * whiteOrBlack)))
             if pieceInSquare[0] == 'x':
-                self.moves.append((rowcolToSquare(self.square)[0] + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.square)[0] + pieceInSquare, self.square)
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + (11 * whiteOrBlack)))
             if pieceInSquare[0] == 'x':
-                self.moves.append((rowcolToSquare(self.square)[0] + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.square)[0] + pieceInSquare, self.square)
 
         elif self.piece.upper() == 'N':
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + 19))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + 21))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + 8))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + 12))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) - 12))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) - 8))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) - 21))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) - 19))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
 
         elif self.piece.upper() == 'R':
             blocked = False
@@ -79,48 +79,48 @@ class pieceClass(object):
                 move += 1
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move -= 1
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move += 10
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move -= 10
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
 
         elif self.piece.upper() == 'B':
             blocked = False
@@ -129,48 +129,48 @@ class pieceClass(object):
                 move += 9
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move += 11
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move -= 11
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move -= 9
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
 
         elif self.piece.upper() == 'Q':
             blocked = False
@@ -179,127 +179,126 @@ class pieceClass(object):
                 move += 9
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move += 10
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move += 11
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move -= 1
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             blocked = False
             move = 0
             while not (blocked):
                 move += 1
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move -= 11
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move -= 10
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
             move = 0
             blocked = False
             while not (blocked):
                 move -= 9
                 pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + move))
                 if pieceInSquare[0] == 'x':
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
                     blocked = True
                 elif pieceInSquare == ' ':
                     blocked = True
                 else:
-                    self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                    self.moves.append((self.piece + pieceInSquare, self.square))
 
         elif self.piece.upper() == 'K':
             # just have to make sure square isn't defended
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + 9))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + 10))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + 11))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) - 1))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) + 1))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) - 11))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) - 10))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
             pieceInSquare = isOccupied(str(int(squareToRowCol(self.square)) - 9))
             if pieceInSquare != ' ':
-                self.moves.append((self.piece + pieceInSquare, rowcolToSquare(self.square)))
+                self.moves.append((self.piece + pieceInSquare, self.square))
          #available moves
 
 def initialiseBoard():
-    piecesOnBoard = {}
     for i in range(8):
         for j in range(8):
             selectedPiece = board[i][j]
@@ -312,16 +311,21 @@ def initialiseBoard():
                         piecesOnBoard[name]
                         iterable += 1
                     except KeyError:
-                        #print(name)
+                        #handle when there are no duplicates
+                        #print('No duplicate: ' + name)
                         break
-                piecesOnBoard[name] = pieceClass(selectedPiece, rowcolToSquare(str(i) + str(j)))
-                print(piecesOnBoard[name].piece + ' ' + piecesOnBoard[name].square)
-
-    '''list = []
+                try:
+                    piecesOnBoard[name] = pieceClass(selectedPiece, rowcolToSquare(str(i) + str(j)))
+                    print(piecesOnBoard[name].piece + ' ' + piecesOnBoard[name].square)
+                except TimeoutError:
+                    print('Error: ' + name, rowcolToSquare(str(i) + str(j)))#, piecesOnBoard[name].moves)
+    '''
+    list = []
     for key, value in piecesOnBoard.items():
         list.append(key)
     list.sort()
-    print(list)'''
+    for key in list:
+        print(key, piecesOnBoard[key].square, piecesOnBoard[key].moves)'''
 
 
 def findPiece(piece):
@@ -419,14 +423,16 @@ def clearBoard():
     board = ['........','........','........','........','........','........','........','........','w','KQkq','-',0,1]
 
 def rowcolToSquare(pieceSquare):
+    #input is int or string and output is a string
     try:
         return chr(int(str(pieceSquare)[1]) + 97) + str(8-int(str(pieceSquare)[0]))
-    except TypeError:
-        print(pieceSquare)
+    except:
+        print('E: ' + str(pieceSquare))
         print(type(pieceSquare))
         raise TypeError
 
 def squareToRowCol(pieceSquare):
+    #input and output are strings
     return str(8-int(pieceSquare[1])) + str(ord(pieceSquare[0]) - 97)
 
 def isOccupied(pieceSquare):
