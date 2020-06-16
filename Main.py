@@ -10,4 +10,6 @@ while True:
     else:
         response = input("Black's move (Type '?' for list of available moves)")
     if response == '?':
-        print(board.moves)
+        moves = board.moves()
+        for move in moves:
+            print(move)
